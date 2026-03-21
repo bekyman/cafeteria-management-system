@@ -1,18 +1,13 @@
-import express from "express";
-import cors from "cors";
-import foodRoutes from "./routes/foodRoutes.js";
+import dotenv from "dotenv";
+import connectDB from "./config/database.js";
+import app from "./app.js";
 
-const app = express();
+dotenv.config();
+connectDB();
 
-app.use(cors());
-app.use(express.json());
+const PORT = process.env.PORT || 5000;
 
-app.use("/api/foods", foodRoutes);
-
-app.get("/", (req, res) => {
-  res.send("API is running...");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
-});
