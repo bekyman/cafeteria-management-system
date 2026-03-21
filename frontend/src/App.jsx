@@ -1,9 +1,14 @@
-import Menu from "./pages/Menu";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Dashboard from "./components/Dashboard";
 
-export default function App() {
+function App() {
   return (
-    <div>
-      <Menu />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </Router>
   );
 }
+
+export default App;
