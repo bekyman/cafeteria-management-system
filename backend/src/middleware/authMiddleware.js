@@ -32,3 +32,34 @@ export const protect = async (req, res, next) => {
     next(err); 
   }
 };
+
+export const staffOrAdmin = (req, res, next) => {
+  if (!req.user?.role) {
+    return res.status(403).json({
+      success: false,
+      message: "User role not available",
+    });
+  }
+
+  if (req.user.role === "staff" || req.user.role === "admin") {
+    return next();
+  }
+
+  return res.status(403).json({
+    success: false,
+    message: "Access denied",
+  });
+};
+
+export const adminOnly = (req, res, next) => {
+  if (req.user?.role === "admin") {
+    return next();
+  }
+
+  return res.status(403).json({
+    success: false,
+    message: "Admin access only",
+  });
+};
+
+export default protect;
