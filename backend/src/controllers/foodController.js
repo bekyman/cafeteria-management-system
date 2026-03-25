@@ -1,17 +1,44 @@
-import FoodItem from "../models/FoodItem.js";
+import {
+  createFoodService,
+  getAllFoodsService,
+  deleteFoodService,
+} from "../services/foodService.js";
 
-export const getFoods = async (req, res) => {
-  const foods = await FoodItem.find();
-  res.json(foods);
+export const createFood = async (req, res, next) => {
+  try {
+    const food = await createFoodService(req.body);
+
+    res.status(201).json({
+      success: true,
+      data: food,
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
-export const createFood = async (req, res) => {
-  const food = new FoodItem(req.body);
-  const saved = await food.save();
-  res.status(201).json(saved);
+export const getFoods = async (req, res, next) => {
+  try {
+    const foods = await getAllFoodsService();
+
+    res.status(200).json({
+      success: true,
+      data: foods,
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
-export const deleteFood = async (req, res) => {
-  await FoodItem.findByIdAndDelete(req.params.id);
-  res.json({ message: "Food deleted" });
+export const deleteFood = async (req, res, next) => {
+  try {
+    await deleteFoodService(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Food deleted",
+    });
+  } catch (err) {
+    next(err);
+  }
 };
