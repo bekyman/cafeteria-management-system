@@ -6,7 +6,7 @@ export default function Menu() {
 
   useEffect(() => {
     api.get("/foods").then((res) => {
-      setFoods(res.data);
+      setFoods(res.data?.data || []);
     });
   }, []);
 
@@ -15,7 +15,7 @@ export default function Menu() {
       <h1>Menu</h1>
 
       {foods.map((food) => (
-        <div key={food.id} style={{ marginBottom: "10px" }}>
+        <div key={food._id || food.id} style={{ marginBottom: "10px" }}>
           {food.name} - {food.price} Birr
         </div>
       ))}
