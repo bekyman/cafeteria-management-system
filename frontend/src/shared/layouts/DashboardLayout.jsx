@@ -1,16 +1,15 @@
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
 import { Outlet } from "react-router-dom";
+import "../../styles/app-shell.css";
 
 const DashboardLayout = () => {
   return (
-    <div className="flex h-screen">
+    <div className="app-shell">
+      <Navbar />
+      <div className="layout-body">
       <Sidebar />
-
-      <div className="flex-1">
-        <Navbar />
-
-        <main className="p-6">
+        <main className="page-content">
           <Outlet />
         </main>
       </div>

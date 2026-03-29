@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import DashboardLayout from "../layouts/DashboardLayout";
-import AuthLayout from "../layouts/AuthLayout";
+import DashboardLayout from "../shared/layouts/DashboardLayout";
+import AuthLayout from "../shared/layouts/AuthLayout";
 
 import Dashboard from "../pages/Dashboard";
 import Inventory from "../pages/Inventory";
