@@ -1,12 +1,9 @@
 import express from "express";
-import {
-  createOrder,
-  getOrders
-} from "../controllers/orderController.js";
 
 const router = express.Router();
 
-router.post("/", createOrder);
-router.get("/", getOrders);
+router.get("/", (req, res) => {
+  res.json({ items: [], message: "Order routes placeholder" });
+});
 
 export default router;

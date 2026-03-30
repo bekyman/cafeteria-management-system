@@ -8,6 +8,7 @@ import reportRoutes from "./routes/reportRoutes.js";
 import foodRoutes from "./routes/foodRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 import { errorHandler } from "./middleware/errorMiddleware.js";
 
@@ -24,6 +25,7 @@ app.use(
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/foods", foodRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/reports", reportRoutes);
