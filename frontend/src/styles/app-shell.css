@@ -83,6 +83,85 @@
   background: #ffffff;
 }
 
+.auth-note {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: #475569;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.auth-tabs button {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.auth-tabs button.active {
+  background: #dbeafe;
+  border-color: #93c5fd;
+  color: #1e3a8a;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.auth-form h3 {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+}
+
+.auth-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.auth-form input {
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.6rem;
+}
+
+.auth-form button {
+  margin-top: 0.25rem;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  cursor: pointer;
+}
+
+.auth-access {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.auth-message {
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.auth-token {
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: #475569;
+}
+
 @media (max-width: 768px) {
   .layout-body {
     flex-direction: column;
