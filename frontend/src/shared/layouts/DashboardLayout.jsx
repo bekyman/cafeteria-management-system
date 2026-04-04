@@ -1,18 +1,22 @@
-import Navbar from "../../components/Navbar";
-import Sidebar from "../../components/Sidebar";
 import { Outlet } from "react-router-dom";
+import Sidebar from "../../components/Sidebar";
+import Navbar from "../../components/Navbar";
 import "../../styles/app-shell.css";
 
 const DashboardLayout = () => {
   return (
     <div className="app-shell">
-      <Navbar />
-      <div className="layout-body">
+
       <Sidebar />
-        <main className="page-content">
+
+      <div className="main-area">
+        <Navbar />
+
+        <main className="content">
           <Outlet />
         </main>
       </div>
+
     </div>
   );
 };

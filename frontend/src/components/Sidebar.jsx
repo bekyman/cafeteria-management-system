@@ -1,31 +1,24 @@
 import { NavLink } from "react-router-dom";
-
-const links = [
-  { path: "/", label: "Dashboard" },
-  { path: "/inventory", label: "Inventory" },
-  { path: "/orders", label: "Orders" },
-  { path: "/menu", label: "Menu" },
-  { path: "/kitchen", label: "Kitchen" },
-  { path: "/reports", label: "Reports" },
-];
+import logo from "../assets/moh-logo.png";
 
 const Sidebar = () => {
   return (
     <aside className="sidebar">
+
+      <div className="logo">
+        <img src={logo} alt="MOH" />
+        <h3>MOH CMS</h3>
+      </div>
+
       <nav>
-        {links.map((link) => (
-          <NavLink
-            key={link.path}
-            to={link.path}
-            end={link.path === "/"}
-            className={({ isActive }) =>
-              `sidebar-link${isActive ? " active" : ""}`
-            }
-          >
-            {link.label}
-          </NavLink>
-        ))}
+        <NavLink to="/">Dashboard</NavLink>
+        <NavLink to="/orders">Orders</NavLink>
+        <NavLink to="/inventory">Inventory</NavLink>
+        <NavLink to="/kitchen">Kitchen</NavLink>
+        <NavLink to="/menu">Menu</NavLink>
+        <NavLink to="/reports">Reports</NavLink>
       </nav>
+
     </aside>
   );
 };
