@@ -1,6 +1,6 @@
 import Providers from "./app/providers";
 
-function App() {
+const App() {
   return <Providers />;
 }
 
