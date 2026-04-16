@@ -1,0 +1,40 @@
+openapi: 3.0.0
+info:
+  title: Ministry Cafeteria Management API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000/api/v1
+
+paths:
+
+  /auth/login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: Login successful
+
+  /orders:
+    get:
+      summary: Get all orders
+      responses:
+        200:
+          description: List of orders
+
+    post:
+      summary: Create order
+      responses:
+        201:
+          description: Order created
