@@ -17,13 +17,25 @@ function App() {
 
         <Route path="/login" element={<Login />} />
 
-        <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/inventory" element={<Inventory />} />
-          <Route path="/kitchen" element={<Kitchen />} />
           <Route path="/reports" element={<Reports />} />
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={["cashier","admin"]} />}>
+          <Route path="/orders" element={<Orders />} />
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={["inventory","admin"]} />}>
+          <Route path="/inventory" element={<Inventory />} />
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={["kitchen","admin"]} />}>
+          <Route path="/kitchen" element={<Kitchen />} />
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={["employee","admin"]} />}>
+          <Route path="/menu" element={<Menu />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/login" />} />
