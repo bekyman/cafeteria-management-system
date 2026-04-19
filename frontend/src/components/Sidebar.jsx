@@ -1,7 +1,15 @@
 import { NavLink } from "react-router-dom";
 import logo from "../assets/moh-logo.png";
+import navigation from "../config/navigation";
 
 const Sidebar = () => {
+
+  const role = localStorage.getItem("role");
+
+  const allowedMenus = navigation.filter(menu =>
+    menu.roles.includes(role)
+  );
+
   return (
     <aside className="sidebar">
 
@@ -11,13 +19,22 @@ const Sidebar = () => {
       </div>
 
       <nav>
-        <NavLink to="/">Dashboard</NavLink>
-        <NavLink to="/orders">Orders</NavLink>
-        <NavLink to="/inventory">Inventory</NavLink>
-        <NavLink to="/kitchen">Kitchen</NavLink>
-        <NavLink to="/menu">Menu</NavLink>
-        <NavLink to="/reports">Reports</NavLink>
+        {allowedMenus.map(menu => (
+          <NavLink key={menu.path} to={menu.path}>
+            {menu.name}
+          </NavLink>
+        ))}
       </nav>
+
+      <button
+        className="logout"
+        onClick={()=>{
+          localStorage.clear();
+          window.location="/login";
+        }}
+      >
+        Logout
+      </button>
 
     </aside>
   );
