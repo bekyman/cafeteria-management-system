@@ -15,10 +15,8 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        {/* PUBLIC ROUTE */}
         <Route path="/login" element={<Login />} />
 
-        {/* PROTECTED ROUTES */}
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/menu" element={<Menu />} />
@@ -28,7 +26,6 @@ function App() {
           <Route path="/reports" element={<Reports />} />
         </Route>
 
-        {/* DEFAULT REDIRECT */}
         <Route path="*" element={<Navigate to="/login" />} />
 
       </Routes>

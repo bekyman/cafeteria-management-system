@@ -5,9 +5,6 @@ const Kitchen = () => {
   const [filter, setFilter] = useState("All");
   const [loading, setLoading] = useState(false);
 
-  // ===============================
-  // Fetch Orders
-  // ===============================
   const fetchOrders = async () => {
     try {
       const res = await fetch("/api/orders");
@@ -18,21 +15,16 @@ const Kitchen = () => {
     }
   };
 
-  // Initial load
   useEffect(() => {
     setLoading(true);
     fetchOrders().finally(() => setLoading(false));
   }, []);
 
-  // ✅ AUTO REFRESH (Real Kitchen Behavior)
   useEffect(() => {
     const interval = setInterval(fetchOrders, 10000); // every 10 sec
     return () => clearInterval(interval);
   }, []);
 
-  // ===============================
-  // Update Order Status
-  // ===============================
   const updateStatus = async (id, status) => {
     await fetch(`/api/orders/${id}`, {
       method: "PUT",
