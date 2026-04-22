@@ -2,44 +2,43 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import { hashPassword, verifyPassword } from "../utils/password.js";
 
-const ORG_EMAIL_DOMAIN = (
-  process.env.ORG_EMAIL_DOMAIN || "organization.com"
-).toLowerCase();
+const ORG_EMAIL_DOMAIN =
+  (process.env.ORG_EMAIL_DOMAIN || "organization.com").toLowerCase();
 
 const isOrgEmail = (email) =>
   email.toLowerCase().endsWith(`@${ORG_EMAIL_DOMAIN}`);
 
+/* ======================================================
+   REGISTER EMPLOYEE
+====================================================== */
 export const registerEmployee = async (req, res) => {
   try {
     const { name, email, employeeId, password } = req.body;
 
     if (!name || !email || !employeeId || !password) {
       return res.status(400).json({
-        message: "name, email, employeeId and password are required",
+        message: "All fields are required",
       });
     }
 
     if (!isOrgEmail(email)) {
       return res.status(400).json({
-        message: `Only ${ORG_EMAIL_DOMAIN} email addresses can register as employees`,
+        message: `Use organization email (@${ORG_EMAIL_DOMAIN})`,
       });
     }
 
     if (password.length < 8) {
       return res
         .status(400)
-        .json({ message: "Password must be at least 8 characters" });
+        .json({ message: "Password must be ≥ 8 characters" });
     }
 
-    const existingUser = await User.findOne({
+    const exists = await User.findOne({
       $or: [{ email: email.toLowerCase() }, { employeeId }],
-    }).select("_id");
+    });
 
-    if (existingUser) {
-      return res
-        .status(409)
-        .json({ message: "User with this email or employeeId already exists" });
-    }
+    if (exists)
+      return res.status(409).json({ message: "User already exists" });
 
     const user = await User.create({
       name,
@@ -50,74 +49,71 @@ export const registerEmployee = async (req, res) => {
       role: "EMPLOYEE",
     });
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-        role: user.role,
-        userType: user.userType,
-        employeeId: user.employeeId,
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
+    const token = generateToken(user);
 
-    return res.status(201).json({
-      message: "Employee registered successfully",
+    res.status(201).json({
+      message: "Employee registered",
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        employeeId: user.employeeId,
-        userType: user.userType,
-        role: user.role,
-      },
+      user: sanitizeUser(user),
     });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
+/* ======================================================
+   LOGIN
+====================================================== */
 export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    if (!username || !password) {
-      return res.status(400).json({ message: "username and password are required" });
-    }
+    if (!username || !password)
+      return res.status(400).json({ message: "Credentials required" });
 
     const user = await User.findOne({
-      $or: [{ email: username }, { name: username }],
-    }).select("_id role userType employeeId name email password");
+      $or: [
+        { email: username.toLowerCase() },
+        { employeeId: username },
+      ],
+    }).select("+password");
 
     if (!user || !verifyPassword(password, user.password)) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-        role: user.role,
-        userType: user.userType,
-        employeeId: user.employeeId,
-        username,
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
+    const token = generateToken(user);
 
-    return res.json({
+    res.json({
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        employeeId: user.employeeId,
-        userType: user.userType,
-        role: user.role,
-      },
+      user: sanitizeUser(user),
     });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
+
+/* ======================================================
+   HELPERS
+====================================================== */
+
+const generateToken = (user) =>
+  jwt.sign(
+    {
+      id: user._id,
+      role: user.role,
+      userType: user.userType,
+      employeeId: user.employeeId,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+
+const sanitizeUser = (user) => ({
+  id: user._id,
+  name: user.name,
+  email: user.email,
+  employeeId: user.employeeId,
+  role: user.role,
+  userType: user.userType,
+});
