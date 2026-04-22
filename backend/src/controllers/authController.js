@@ -8,9 +8,6 @@ const ORG_EMAIL_DOMAIN =
 const isOrgEmail = (email) =>
   email.toLowerCase().endsWith(`@${ORG_EMAIL_DOMAIN}`);
 
-/* ======================================================
-   REGISTER EMPLOYEE
-====================================================== */
 export const registerEmployee = async (req, res) => {
   try {
     const { name, email, employeeId, password } = req.body;
@@ -61,9 +58,6 @@ export const registerEmployee = async (req, res) => {
   }
 };
 
-/* ======================================================
-   LOGIN
-====================================================== */
 export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -92,10 +86,6 @@ export const login = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-/* ======================================================
-   HELPERS
-====================================================== */
 
 const generateToken = (user) =>
   jwt.sign(
