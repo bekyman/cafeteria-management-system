@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { pathname } = useLocation();
@@ -10,7 +11,7 @@ const Login = () => {
   }, [pathname]);
 
   const [activeTab, setActiveTab] = useState(defaultTab);
-  const [loginForm, setLoginForm] = useState({ username: "", password: "" });
+  const [loginForm, setLoginForm] = useState({ email: "", password: "" });
   const [registerForm, setRegisterForm] = useState({
     name: "",
     email: "",
@@ -96,7 +97,6 @@ const Login = () => {
           className={activeTab === "access" ? "active" : ""}
           onClick={() => setActiveTab("access")}
         >
-          Employee / Guest Access
         </button>
       </div>
 
@@ -107,7 +107,7 @@ const Login = () => {
             <input
               value={loginForm.username}
               onChange={(e) =>
-                setLoginForm((prev) => ({ ...prev, username: e.target.value }))
+                setLoginForm((prev) => ({ ...prev, email: e.target.value }))
               }
               required
             />
