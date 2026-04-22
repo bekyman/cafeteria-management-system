@@ -11,13 +11,15 @@ const seed = async () => {
     await User.deleteMany();
 
     await User.create({
-      name: "System Admin",
+      name: "System Administrator",
       email: "admin@moh.gov.et",
+      employeeId: "MOH-ADMIN-001",
       password: "123456",
-      role: "admin",
+      userType: "EMPLOYEE",
+      role: "ADMIN",
     });
 
-    console.log("✅ Database Seeded");
+    console.log("✅ Database Seeded Successfully");
 
     process.exit();
   } catch (error) {

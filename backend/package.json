@@ -5,10 +5,11 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "start": "node src/server.js",
+  "dev": "nodemon src/server.js",
+  "seed": "node src/seed/seedData.js",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
   "keywords": [],
   "author": "Bereket",
   "license": "ISC",
