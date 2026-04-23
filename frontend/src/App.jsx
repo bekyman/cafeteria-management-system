@@ -17,24 +17,24 @@ function App() {
 
         <Route path="/login" element={<Login />} />
 
-        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+        <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/reports" element={<Reports />} />
         </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["cashier","admin"]} />}>
+        <Route element={<ProtectedRoute allowedRoles={["CASHIER","ADMIN"]} />}>
           <Route path="/orders" element={<Orders />} />
         </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["inventory","admin"]} />}>
+        <Route element={<ProtectedRoute allowedRoles={["INVENTORY","ADMIN"]} />}>
           <Route path="/inventory" element={<Inventory />} />
         </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["kitchen","admin"]} />}>
+        <Route element={<ProtectedRoute allowedRoles={["KITCHEN","ADMIN"]} />}>
           <Route path="/kitchen" element={<Kitchen />} />
         </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["employee","admin"]} />}>
+        <Route element={<ProtectedRoute allowedRoles={["EMPLOYEE","ADMIN"]} />}>
           <Route path="/menu" element={<Menu />} />
         </Route>
 
