@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
 
@@ -14,10 +15,17 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("/auth/login", form);
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        form
+      );
 
+      // ✅ SAVE AUTH SESSION
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.user.role);
+      localStorage.setItem(
+        "user",
+        JSON.stringify(res.data.user)
+      );
 
       redirectByRole(res.data.user.role);
 
@@ -26,22 +34,33 @@ const Login = () => {
     }
   };
 
+  // ✅ ROLE BASED REDIRECTION
   const redirectByRole = (role) => {
+
     switch (role) {
+
       case "ADMIN":
-        navigate("/admin");
+        navigate("/");
         break;
+
       case "KITCHEN":
         navigate("/kitchen");
         break;
-      case "STAFF":
-        navigate("/staff");
+
+      case "CASHIER":
+        navigate("/orders");
         break;
-      case "CAFETERIA":
-        navigate("/cafeteria");
+
+      case "INVENTORY":
+        navigate("/inventory");
         break;
+
+      case "EMPLOYEE":
+        navigate("/menu");
+        break;
+
       default:
-        navigate("/employee");
+        navigate("/login");
     }
   };
 
@@ -50,18 +69,22 @@ const Login = () => {
       <h2>Cafeteria Login</h2>
 
       <input
-        placeholder="Email or Employee ID"
+        placeholder="Email or Username"
+        value={form.username}
         onChange={(e) =>
           setForm({ ...form, username: e.target.value })
         }
+        required
       />
 
       <input
         type="password"
         placeholder="Password"
+        value={form.password}
         onChange={(e) =>
           setForm({ ...form, password: e.target.value })
         }
+        required
       />
 
       <button type="submit">Login</button>
